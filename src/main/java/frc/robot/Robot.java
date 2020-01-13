@@ -10,6 +10,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -25,12 +27,13 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX leftfront = new WPI_TalonSRX(2);
   private WPI_TalonSRX rightfront = new WPI_TalonSRX(3);
   private WPI_TalonSRX rightrear = new WPI_TalonSRX(4);
+  private Compressor comp = new Compressor(7);  
+  private Solenoid ledLight = new Solenoid(7,3);
   
-
   @Override
   public void robotInit() {
-    leftrear.setInverted(true);
-    leftfront.setInverted(true);
+    leftrear.setInverted(false);
+    leftfront.setInverted(false);
     leftrear.follow(leftfront);
     rightrear.follow(rightfront);
     leftrear.setNeutralMode(NeutralMode.Brake);
@@ -43,6 +46,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_myRobot.arcadeDrive(-1*m_stick.getRawAxis(2), m_stick.getRawAxis(4));
+    m_myRobot.arcadeDrive(-1*m_stick.getRawAxis(1)/2, m_stick.getRawAxis(4)/2);
+    if(m_stick.getYButton()){
+      ledLight.set(true);
+    }else{
+      ledLight.set(false);
+    }
   }
 }
