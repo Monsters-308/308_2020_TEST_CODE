@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Y Button", m_stick.getYButton());
     SmartDashboard.putNumber("yaw", yaw.getDouble(0.0));
     SmartDashboard.putBoolean("A Button", m_stick.getAButton());
+    
     if (m_stick.getAButton()){
       double turnvalue = yaw.getDouble(0.0);
       SmartDashboard.putNumber("turnvalue", turnvalue);
